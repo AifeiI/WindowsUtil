@@ -7,7 +7,7 @@ setlocal enabledelayedexpansion
 set yourDomain=
 
 :: 1) Zone / Instructions / password
-:: 1) Zone / Instructions / Benutzername
+:: 2) Zone / Instructions / Benutzername
 set token=
 
 set checkIPApi=ip.ddnspod.com
