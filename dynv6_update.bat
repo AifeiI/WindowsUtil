@@ -1,5 +1,5 @@
 @echo off
-
+chcp 65001
 setlocal enabledelayedexpansion
 
 :: 1) Zone Name
@@ -7,13 +7,18 @@ setlocal enabledelayedexpansion
 set yourDomain=
 
 :: 1) Zone / Instructions / password
-:: 2) Zone / Instructions / Benutzername
+:: 1) Zone / Instructions / Benutzername
 set token=
 
-set checkIPApi=ip.ddnspod.com
+:: curl method
+::set checkIPApi=ip.ddnspod.com
+::for /f "delims=" %%i in ('curl -s6 !checkIPApi!') do set ipAddress=%%i
 
-for /f "delims=" %%i in ('curl -s6 !checkIPApi!') do set ipAddress=%%i
-echo ipv6: %ipAddress%
+:: netsh method
+for /f "tokens=5" %%i in ('netsh interface ipv6 show addresses ^| find "Public" ^| find "Preferred"') do (
+    set ipAddress=%%i
+)
+echo IPv6: %ipAddress%
 
 set url="https://dynv6.com/api/update?hostname=!yourDomain!&token=!token!&ipv6=!ipAddress!"
 
